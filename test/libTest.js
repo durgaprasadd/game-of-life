@@ -4,7 +4,8 @@ const {
   generateValidCombinations,
   checkValidNeighbour,
   generatePossibleNeighbours,
-  checkNeighbourState
+  checkNeighbourState,
+  checkNextState
 } = require("../src/lib.js");
 const assert = require('assert');
 
@@ -54,4 +55,23 @@ describe("checkNeighbourState",function(){
    position = [2,2];
    assert.deepEqual(checkNeighbourState(grid,position),{1:[[2,1]],0:[[1,1],[1,2]]});
  });
+});
+
+describe('check the next state',function(){
+  it('should give 0 if current state is alive and fewer than two neighbour alive',function(){
+    assert.deepEqual(checkNextState({1:[[1,0]],0:[[0,1],[1,1]]},1),0);
+  });
+  it('should give 0 if current state is alive and more than three neighbour alive',function(){
+    assert.deepEqual(checkNextState({1:[[1,1],[1,2],[0,1],[2,1]]},1),0);
+  });
+  it('should give 1 if current state is alive and 2 or 3 neighbour alive',function(){
+    assert.deepEqual(checkNextState({1:[[1,1],[1,2],[0,1]]},1),1);
+  });
+  it('should give 1 if current state is dead and exactly 3 people are alive',function(){
+    assert.deepEqual(checkNextState({1:[[1,1],[1,2],[1,0]],0:[[0,1],[2,1]]},1),1);
+  });
+  it('should give 0 if current state is dead and exactly 3 people are not alive',function(){
+    assert.deepEqual(checkNextState({1:[[1,0]],0:[[1,1],[1,2]]},0),0);
+  });
+  
 });

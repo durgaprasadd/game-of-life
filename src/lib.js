@@ -53,11 +53,25 @@ const checkNeighbourState = function(grid,position){
   return validCombinations.reduce(checkState(grid),{1:[],0:[]});
 }
 
+const checkNextState = function(neighbourStates,currState){
+  let aliveNeighbour = neighbourStates[1].length;
+  if(currState == 0 && aliveNeighbour ==3){
+    return 1;
+  }
+  if(currState==0 || aliveNeighbour<2 || aliveNeighbour >3){
+    return 0;
+  }
+  return 1;
+}
+
+console.log(checkNextState({1:[[1,0]],0:[[0,1],[1,1]]},1));
+
 module.exports = { 
   initCell,
   arrangeCells,
   generateValidCombinations,
   checkValidNeighbour,
   generatePossibleNeighbours,
-  checkNeighbourState
+  checkNeighbourState,
+  checkNextState
 };
