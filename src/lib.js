@@ -1,8 +1,8 @@
-const initCell = function(){
+const initCell = function(size){
   let cells = [];
-  cells.push(new Array(3).fill(0));
-  cells.push(new Array(3).fill(0));
-  cells.push(new Array(3).fill(0));
+  for(let index=0;index<size;index++){
+    cells.push(new Array(size).fill(0));
+  }
   return cells;
 }
 
@@ -16,8 +16,8 @@ const arrangeCells = function(cells,inputs){
 let board = {
   grid : initCell(),
   gridWithInput : function(){
-                    return arrangeCells(this.grid,process.argv);
-                  }
+    return arrangeCells(this.grid,process.argv);
+  }
 };
 
 let possibleCombinations = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
@@ -37,7 +37,7 @@ const checkValidNeighbour = function(grid){
 }
 
 const generateValidCombinations = function(grid,currPosition){
-   let possibleNeighbours = possibleCombinations.map(generatePossibleNeighbours(currPosition));
+  let possibleNeighbours = possibleCombinations.map(generatePossibleNeighbours(currPosition));
   return possibleNeighbours.filter(checkValidNeighbour(grid));
 }
 
@@ -64,7 +64,17 @@ const checkNextState = function(neighbourStates,currState){
   return 1;
 }
 
-console.log(checkNextState({1:[[1,0]],0:[[0,1],[1,1]]},1));
+const updateState = function(grid){
+  let result = grid.map(x=>x.slice());
+  for(let rowIndex=0;rowIndex<grid.length;rowIndex++){
+    for(let columnIndex=0;columnIndex<grid.length;columnIndex++){
+      let neighbourStates = checkNeighbourState(grid,[rowIndex,columnIndex]);
+      let nextState = checkNextState(neighbourStates,grid[rowIndex][columnIndex]);
+      result[rowIndex][columnIndex] = nextState;
+    }
+  }
+  return result;
+}
 
 module.exports = { 
   initCell,
@@ -73,5 +83,6 @@ module.exports = {
   checkValidNeighbour,
   generatePossibleNeighbours,
   checkNeighbourState,
-  checkNextState
+  checkNextState,
+  updateState
 };
