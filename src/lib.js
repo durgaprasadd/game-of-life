@@ -6,20 +6,19 @@ const initCell = function(){
   return cells;
 }
 
-const arrangeCells = function(cells){
-  cells[0][0]=1;
-  cells[1][2]=1;
-  cells[2][2]=1;
+const arrangeCells = function(cells,inputs){
+  for(let index = 2; index<inputs.length; index++){
+    cells[Math.floor((inputs[index]-1)/3)][(inputs[index]-1)%3]=1;
+  }
   return cells;
 }
 
 let board = {
   grid : initCell(),
   gridWithInput : function(){
-                    return arrangeCells(this.grid);
+                    return arrangeCells(this.grid,process.argv);
                   }
 };
-
 module.exports = { 
   initCell,
   arrangeCells
