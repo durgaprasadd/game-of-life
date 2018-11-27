@@ -14,7 +14,7 @@ const arrangeCells = function(cells,inputs){
 }
 
 let board = {
-  grid : initCell(),
+  grid : initCell(3),
   gridWithInput : function(){
     return arrangeCells(this.grid,process.argv);
   }
@@ -37,6 +37,8 @@ const checkValidNeighbour = function(grid){
 }
 
 const generateValidCombinations = function(grid,currPosition){
+  //allDeltas.map(delta => currentPosition.add(delta)).filter(validNeighbour(grid));
+
   let possibleNeighbours = possibleCombinations.map(generatePossibleNeighbours(currPosition));
   return possibleNeighbours.filter(checkValidNeighbour(grid));
 }
@@ -79,6 +81,7 @@ const updateState = function(grid){
 module.exports = { 
   initCell,
   arrangeCells,
+  board,
   generateValidCombinations,
   checkValidNeighbour,
   generatePossibleNeighbours,
