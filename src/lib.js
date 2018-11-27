@@ -36,15 +36,28 @@ const checkValidNeighbour = function(grid){
   }
 }
 
-const validCombinations = function(grid,currPosition){
+const generateValidCombinations = function(grid,currPosition){
    let possibleNeighbours = possibleCombinations.map(generatePossibleNeighbours(currPosition));
   return possibleNeighbours.filter(checkValidNeighbour(grid));
+}
+
+const checkState = function(grid){
+  return function(object,position){
+    object[grid[position[0]][position[1]]].push(position);
+    return object;
+  }
+}
+
+const checkNeighbourState = function(grid,position){
+  let validCombinations = generateValidCombinations(grid,position);
+  return validCombinations.reduce(checkState(grid),{1:[],0:[]});
 }
 
 module.exports = { 
   initCell,
   arrangeCells,
-  validCombinations,
+  generateValidCombinations,
   checkValidNeighbour,
-  generatePossibleNeighbours
+  generatePossibleNeighbours,
+  checkNeighbourState
 };

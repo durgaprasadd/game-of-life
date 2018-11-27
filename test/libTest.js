@@ -1,9 +1,10 @@
 const { 
   initCell,
   arrangeCells,
-  validCombinations,
+  generateValidCombinations,
   checkValidNeighbour,
-  generatePossibleNeighbours
+  generatePossibleNeighbours,
+  checkNeighbourState
 } = require("../src/lib.js");
 const assert = require('assert');
 
@@ -21,7 +22,7 @@ describe("arrangeCells",function(){
 
 describe('valid combinations',function(){
   it('should return valid neighbours for given position',function(){
-    assert.deepEqual(validCombinations(initCell(),[0,0]),[[0,1],[1,0],[1,1]]);
+    assert.deepEqual(generateValidCombinations(initCell(),[0,0]),[[0,1],[1,0],[1,1]]);
   });
 });
 
@@ -41,4 +42,16 @@ describe('generate possible neighbour',function(){
   it('should return all the 8 possible neighbour of the given position',function(){
     assert.deepEqual(calculateNeighbour([-1,-1]),[-1,1]);
   });
+});
+
+describe("checkNeighbourState",function(){
+ it("should return object containing alive and dead cells",function(){
+   let grid = [[0,1,0],[1,0,0],[0,1,0]];
+   let position = [0,0];
+   assert.deepEqual(checkNeighbourState(grid,position),{1:[[0,1],[1,0]],0:[[1,1]]});
+   position = [1,0];
+   assert.deepEqual(checkNeighbourState(grid,position),{1:[[0,1],[2,1]],0:[[0,0],[1,1],[2,0]]});
+   position = [2,2];
+   assert.deepEqual(checkNeighbourState(grid,position),{1:[[2,1]],0:[[1,1],[1,2]]});
+ });
 });
