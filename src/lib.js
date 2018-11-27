@@ -6,8 +6,21 @@ const initCell = function(){
   return cells;
 }
 
-let board = {
-  grid:initCell()
+const arrangeCells = function(cells){
+  cells[0][0]=1;
+  cells[1][2]=1;
+  cells[2][2]=1;
+  return cells;
 }
 
-exports.initCell = initCell;
+let board = {
+  grid : initCell(),
+  gridWithInput : function(){
+                    return arrangeCells(this.grid);
+                  }
+};
+
+module.exports = { 
+  initCell,
+  arrangeCells
+};
