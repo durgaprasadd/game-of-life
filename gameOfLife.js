@@ -3,8 +3,7 @@ const readline = require("readline-sync").question;
 
 const readUserInput = function(){
   let size = readline("enter the size of grid: ");
-  let aliveCells = readline("enter the aliveCells: ");
-  aliveCells = aliveCells.split(' ');
+  let aliveCells = readline("enter the aliveCells: ").split(' ');
   return {size : +size, aliveCells : aliveCells};
 }
 
