@@ -3,32 +3,27 @@ const readline = require("readline-sync").question;
 const startGame = function(input){
   let grid = initCell(input.size);
   grid = arrangeCells(grid,input.aliveCells);
+  console.log(printBoard(grid));
   for(let count=0;count<10;count++){
     grid = updateState(grid);
-    console.log(grid);
+    console.log(printBoard(grid));
   }
 }
 
-const initCell = function(size){
-  let cells = new Array(size).fill(size);
+const initCell = function(height,width){
+  let cells = new Array(height).fill(width);
   return cells.map( x => new Array(x).fill(0));
 }
 
 const updateCellWithInput = function(cells,element){
     let size = cells.length;
-    cells[Math.floor((element-1)/size)][(element-1)%size]++;
+    cells[element[0]][element[1]]++;
     return cells;
 }
 
 const arrangeCells = function(cells,inputs){
   inputs.reduce(updateCellWithInput,cells);
   return cells;
-}
-
-const readUserInput = function(){
-  let size = readline("enter the size of grid: ");
-  let aliveCells = readline("enter the aliveCells: ").split(' ');
-  return {size : +size, aliveCells : aliveCells};
 }
 
 let possibleCombinations = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
@@ -82,6 +77,12 @@ const updateState = function(grid){
     }
   }
   return result;
+}
+
+const printBoard = function(grid){
+  let line = grid.map( x => '| '+x.join(' | ')+' |');
+  let lineSeparator = new Array((4*grid.length)+1).fill('-').join('');
+  return lineSeparator+'\n'+line.join('\n'+lineSeparator+'\n')+'\n'+lineSeparator;
 }
 
 module.exports = { 

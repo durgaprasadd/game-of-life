@@ -13,19 +13,19 @@ const assert = require('assert');
 
 describe("initCell",function(){
   it("should return 3X3 array filled with 0",function(){
-    assert.deepEqual(initCell(3),[[0,0,0],[0,0,0],[0,0,0]]);
+    assert.deepEqual(initCell(3,3),[[0,0,0],[0,0,0],[0,0,0]]);
   });
 });
 
 describe("arrangeCells",function(){
   it("should return updated 3X3 array with inputs",function(){
-    assert.deepEqual(arrangeCells(initCell(3),[1,6,9],3),[[1,0,0],[0,0,1],[0,0,1]]);
+    assert.deepEqual(arrangeCells(initCell(3,3),[[0,0],[1,2],[2,2]]),[[1,0,0],[0,0,1],[0,0,1]]);
   });
 });
 
 describe('valid combinations',function(){
   it('should return valid neighbours for given position',function(){
-    assert.deepEqual(generateValidCombinations(initCell(3),[0,0]),[[0,1],[1,0],[1,1]]);
+    assert.deepEqual(generateValidCombinations(initCell(3,3),[0,0]),[[0,1],[1,0],[1,1]]);
   });
 });
 
@@ -87,9 +87,9 @@ describe("updateState",()=>{
 
 describe("updateCellWithInput",function(){
   it("should return updated grid with one alive cell",function(){
-    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],1),[[1,0],[0,0]]);
-    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],3),[[0,0],[1,0]]);
-    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],4),[[0,0],[0,1]]);
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],[0,0]),[[1,0],[0,0]]);
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],[1,0]),[[0,0],[1,0]]);
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],[1,1]),[[0,0],[0,1]]);
   })
 
 });
