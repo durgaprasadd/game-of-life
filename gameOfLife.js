@@ -1,16 +1,12 @@
-let {
-  board,
-  updateState
-}= require("./src/lib.js");
+let { startGame }= require("./src/lib.js");
+const readline = require("readline-sync").question;
 
-const startGame = function(){
-  let count = 0;
-  let cells = board.gridWithInput();
-  while(count != 10){
-    count++;
-    cells = updateState(cells);
-    console.log(cells);
-  }
+const readUserInput = function(){
+  let size = readline("enter the size of grid: ");
+  let aliveCells = readline("enter the aliveCells: ");
+  aliveCells = aliveCells.split(' ');
+  return {size : +size, aliveCells : aliveCells};
 }
 
-startGame()
+let input = readUserInput();
+startGame(input);

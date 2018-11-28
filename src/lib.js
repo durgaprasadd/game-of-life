@@ -1,5 +1,14 @@
 const readline = require("readline-sync").question;
 
+const startGame = function(input){
+  let grid = initCell(input.size);
+  grid = arrangeCells(grid,input.aliveCells);
+  for(let count=0;count<10;count++){
+    grid = updateState(grid);
+    console.log(grid);
+  }
+}
+
 const initCell = function(size){
   let cells = [];
   for(let index=0;index<size;index++){
@@ -8,8 +17,9 @@ const initCell = function(size){
   return cells;
 }
 
-const arrangeCells = function(cells,inputs,size){
-  for(let index = 2; index<inputs.length; index++){
+const arrangeCells = function(cells,inputs){
+  let size = cells.length;
+  for(let index = 0; index<inputs.length; index++){
     cells[Math.floor((inputs[index]-1)/size)][(inputs[index]-1)%size]=1;
   }
   return cells;
@@ -17,16 +27,10 @@ const arrangeCells = function(cells,inputs,size){
 
 const readUserInput = function(){
   let size = readline("enter the size of grid: ");
-  return +size;
+  let aliveCells = readline("enter the aliveCells: ");
+  aliveCells = aliveCells.split(' ');
+  return {size : +size, aliveCells : aliveCells};
 }
-
-let board = {
-  size:readUserInput(),
-  grid : function(){return initCell(this.size);}, 
-  gridWithInput : function(){
-    return arrangeCells(this.grid(),process.argv,this.size);
-  }
-};
 
 let possibleCombinations = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 
@@ -84,11 +88,11 @@ const updateState = function(grid){
 module.exports = { 
   initCell,
   arrangeCells,
-  board,
   generateValidCombinations,
   checkValidNeighbour,
   generatePossibleNeighbours,
   checkNeighbourState,
   checkNextState,
-  updateState
+  updateState,
+  startGame
 };
