@@ -33,10 +33,10 @@ const readUserInput = function(){
 
 let possibleCombinations = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 
-const generatePossibleNeighbours = function(currPosition){
-  return function(list){
-    let rowIndex = currPosition[0]+list[0];
-    let columnIndex = currPosition[1]+list[1];
+const generatePossibleNeighbours = function(currentPosition){
+  return function(delta){
+    let rowIndex = currentPosition[0]+delta[0];
+    let columnIndex = currentPosition[1]+delta[1];
     return [rowIndex,columnIndex];
   }
 }
@@ -66,10 +66,10 @@ const checkNeighbourState = function(grid,position){
   return validCombinations.reduce(checkState(grid),{1:[],0:[]});
 }
 
-const checkNextState = function(neighbourStates,currState){
+const checkNextState = function(neighbourStates,currentState){
   let aliveNeighbour = neighbourStates[1].length;
   let state = [[0,0,0,1,0,0,0,0,0],[0,0,1,1,0,0,0,0,0]];
-  return state[currState][aliveNeighbour];
+  return state[currentState][aliveNeighbour];
 }
 
 const updateState = function(grid){
