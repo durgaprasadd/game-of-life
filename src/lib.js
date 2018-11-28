@@ -10,11 +10,8 @@ const startGame = function(input){
 }
 
 const initCell = function(size){
-  let cells = [];
-  for(let index=0;index<size;index++){
-    cells.push(new Array(size).fill(0));
-  }
-  return cells;
+  let cells = new Array(size).fill(size);
+  return cells.map( x => new Array(x).fill(0));
 }
 
 const arrangeCells = function(cells,inputs){
