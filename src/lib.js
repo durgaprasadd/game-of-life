@@ -1,3 +1,5 @@
+const readline = require("readline-sync").question;
+
 const initCell = function(size){
   let cells = [];
   for(let index=0;index<size;index++){
@@ -6,17 +8,23 @@ const initCell = function(size){
   return cells;
 }
 
-const arrangeCells = function(cells,inputs){
+const arrangeCells = function(cells,inputs,size){
   for(let index = 2; index<inputs.length; index++){
-    cells[Math.floor((inputs[index]-1)/3)][(inputs[index]-1)%3]=1;
+    cells[Math.floor((inputs[index]-1)/size)][(inputs[index]-1)%size]=1;
   }
   return cells;
 }
 
+const readUserInput = function(){
+  let size = readline("enter the size of grid: ");
+  return +size;
+}
+
 let board = {
-  grid : initCell(3),
+  size:readUserInput(),
+  grid : function(){return initCell(this.size);}, 
   gridWithInput : function(){
-    return arrangeCells(this.grid,process.argv);
+    return arrangeCells(this.grid(),process.argv,this.size);
   }
 };
 
@@ -57,13 +65,8 @@ const checkNeighbourState = function(grid,position){
 
 const checkNextState = function(neighbourStates,currState){
   let aliveNeighbour = neighbourStates[1].length;
-  if(currState == 0 && aliveNeighbour ==3){
-    return 1;
-  }
-  if(currState==0 || aliveNeighbour<2 || aliveNeighbour >3){
-    return 0;
-  }
-  return 1;
+  let state = [[0,0,0,1,0,0,0,0,0],[0,0,1,1,0,0,0,0,0]];
+  return state[currState][aliveNeighbour];
 }
 
 const updateState = function(grid){

@@ -18,7 +18,7 @@ describe("initCell",function(){
 
 describe("arrangeCells",function(){
   it("should return updated 3X3 array with inputs",function(){
-    assert.deepEqual(arrangeCells(initCell(3),[,,1,6,9]),[[1,0,0],[0,0,1],[0,0,1]]);
+    assert.deepEqual(arrangeCells(initCell(3),[,,1,6,9],3),[[1,0,0],[0,0,1],[0,0,1]]);
   });
 });
 
