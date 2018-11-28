@@ -6,7 +6,8 @@ const {
   generatePossibleNeighbours,
   checkNeighbourState,
   checkNextState,
-  updateState
+  updateState,
+  updateCellWithInput
 } = require("../src/lib.js");
 const assert = require('assert');
 
@@ -82,4 +83,13 @@ describe("updateState",()=>{
     assert.deepEqual(updateState([[0,1],[1,0]]),[[0,0],[0,0]]);
     assert.deepEqual(updateState([[0,1,0],[1,0,0],[0,0,0]]),[[0,0,0],[0,0,0],[0,0,0]]);
   });
+});
+
+describe("updateCellWithInput",function(){
+  it("should return updated grid with one alive cell",function(){
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],1),[[1,0],[0,0]]);
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],3),[[0,0],[1,0]]);
+    assert.deepEqual(updateCellWithInput([[0,0],[0,0]],4),[[0,0],[0,1]]);
+  })
+
 });

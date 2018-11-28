@@ -14,11 +14,14 @@ const initCell = function(size){
   return cells.map( x => new Array(x).fill(0));
 }
 
+const updateCellWithInput = function(cells,element){
+    let size = cells.length;
+    cells[Math.floor((element-1)/size)][(element-1)%size]++;
+    return cells;
+}
+
 const arrangeCells = function(cells,inputs){
-  let size = cells.length;
-  for(let index = 0; index<inputs.length; index++){
-    cells[Math.floor((inputs[index]-1)/size)][(inputs[index]-1)%size]=1;
-  }
+  inputs.reduce(updateCellWithInput,cells);
   return cells;
 }
 
@@ -91,5 +94,6 @@ module.exports = {
   checkNeighbourState,
   checkNextState,
   updateState,
-  startGame
+  startGame,
+  updateCellWithInput
 };
